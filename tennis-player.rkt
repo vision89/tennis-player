@@ -1,0 +1,28 @@
+#lang racket
+(require "jamk/just-another-microkanren.rkt")
+
+(fresh (h)
+       (run* (h) (all (== h (list
+                          (list (_) (_) (_))
+                          (list (_) (_) (_))
+                          (list (_) (_) (_))
+                          (list (_) (_) (_))
+                          ))
+                      (memo (list (_) (_) 'swimmer) h)
+                      (memo (list (_) (_) 'skater) h)
+                      (memo (list (_) (_) 'gymnist) h)
+                      (memo (list (_) (_) 'tennis) h)
+                      (memo (list 'alice 'f (_)) h)
+                      (memo (list 'carol 'f (_)) h)
+                      (memo (list 'brian 'm (_)) h)
+                      (memo (list 'david 'm (_)) h)
+                      (lefto (list (_) (_) 'swimmer) (list 'alice 'f (_)) h)
+                      (nexto (list 'carol 'f (_)) (list 'david 'm (_)) h)
+                      (lefto (list (_) 'f (_)) (list (_) (_) 'skater) h)
+                      (fresh (a)
+                             (all
+                              (lefto a (list 'brian 'm (_)) h)
+                              (lefto (list (_) (_) 'gymnist) a h)))
+                      )
+             )
+       )
